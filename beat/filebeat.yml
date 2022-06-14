@@ -12,25 +12,25 @@
 
 # ============================== Filebeat inputs ===============================
 
-filebeat.inputs:
+#filebeat.inputs:
 
 # Each - is an input. Most options can be set at the input level, so
 # you can use different inputs for various configurations.
 # Below are the input specific configurations.
 
-- type: log
+#- type: log
 
   # Change to true to enable this input configuration.
-  enabled: true
+  #enabled: true
 
   # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - C:/elasticsearch-7.10.2/logs/*.log
+  #paths:
+  #  - C:/elasticsearch-7.10.2/logs/*.log
   #ignore_older: 24h
-  multiline.pattern: '^b'
-  multiline.negate: false
-  multiline.match: before
-  exclude_files: ['\.go$', '\.gz$', 'gc.log', 'elasticsearch_deprecation.log']
+  #multiline.pattern: '^b'
+  #multiline.negate: false
+  #multiline.match: before
+  #exclude_files: ['\.go', '\.gz', 'gc.log', 'elasticsearch_deprecation.log']
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -68,14 +68,14 @@ filebeat.inputs:
   #multiline.match: after
 
 # filestream is an experimental input. It is going to replace log input in the future.
-- type: filestream
+#- type: filestream
 
   # Change to true to enable this input configuration.
-  enabled: false
+#  enabled: false
 
   # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - /var/log/*.log
+#  paths:
+#    - /var/log/*.log
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -100,7 +100,7 @@ filebeat.inputs:
 
 filebeat.config.modules:
   # Glob pattern for configuration loading
-  path: ${path.config}/modules.d/*.yml
+  path: C:/filebeat-7.10.1-windows-x86_64/modules.d/*.yml
 
   # Set to true to enable config reloading
   reload.enabled: false
