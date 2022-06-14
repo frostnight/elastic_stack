@@ -26,6 +26,11 @@ filebeat.inputs:
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
     - C:/elasticsearch-7.10.2/logs/*.log
+  #ignore_older: 24h
+  multiline.pattern: '^b'
+  multiline.negate: false
+  multiline.match: before
+  exclude_files: ['\.go$', '\.gz$', 'gc.log', 'elasticsearch_deprecation.log']
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
