@@ -12,20 +12,20 @@
 
 # ============================== Filebeat inputs ===============================
 
-#filebeat.inputs:
+filebeat.inputs:
 
 # Each - is an input. Most options can be set at the input level, so
 # you can use different inputs for various configurations.
 # Below are the input specific configurations.
 
-#- type: log
+- type: log
 
   # Change to true to enable this input configuration.
-  #enabled: true
+  enabled: true
 
   # Paths that should be crawled and fetched. Glob based paths.
-  #paths:
-  #  - C:/elasticsearch-7.10.2/logs/*.log
+  paths:
+    - C:/elasticsearch-7.10.2/logs/*.log
   #ignore_older: 24h
   #multiline.pattern: '^b'
   #multiline.negate: false
@@ -230,7 +230,7 @@ processors:
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-#monitoring.enabled: false
+monitoring.enabled: true
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
 # Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
@@ -244,7 +244,7 @@ processors:
 # output configuration, so if you have the Elasticsearch output configured such
 # that it is pointing to your Elasticsearch monitoring cluster, you can simply
 # uncomment the following line.
-#monitoring.elasticsearch:
+monitoring.elasticsearch:
 
 # ============================== Instrumentation ===============================
 
@@ -257,8 +257,7 @@ processors:
     #environment: ""
 
     # APM Server hosts to report instrumentation results to.
-    #hosts:
-    #  - http://localhost:8200
+    hosts: ["localhost:9200"]
 
     # API Key for the APM Server(s).
     # If api_key is set then secret_token will be ignored.
