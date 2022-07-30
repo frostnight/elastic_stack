@@ -109,10 +109,11 @@
 map.regionmap:
   layers:
     - name: "ADONG"
+      attribution: "INRAP"
       url: "http://localhost/seoul_adm.geojson"
       fields:
-          - name: "ADM_DR_NM"
-            description: "ADM NAME"
+        - name: "ADM_DR_NM"
+          description: "ADM NAME"
 
 #map.tilemap.url:
 #  "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
