@@ -3,7 +3,7 @@ import traceback
 import urllib.request
 from xml.etree.ElementTree import ElementTree, fromstring
 
-from elasticsearch import Elasticsearch, RequestError
+from elasticsearch import Elasticsearch, helpers
 
 
 def get_api_key(key):
@@ -13,13 +13,10 @@ def get_api_key(key):
 
 
 api_key = get_api_key("SEOUL_PUBLIC_API_KEY")
-# url = f"http://openapi.seoul.go.kr:8088/{api_key}/json/TbPublicWifiInfo/1/5/"
-# response = urllib.request.urlopen(url)
-# json_str = response.read().decode('utf-8')
-# data = json.loads(json_str)
-# print(json.dumps(data, indent=4, ensure_ascii=False))
 
 es = Elasticsearch()
+
+docs = []
 
 for i in range(1, 21):
     iStart = (i-1)*1000 + 1
@@ -31,13 +28,17 @@ for i in range(1, 21):
 
     tree = ElementTree(fromstring(xml_str))
     root = tree.getroot()
-    try:
-        for row in root.iter("row"):
-            gu_nm = row.find('X_SWIFI_WRDOFC').text
-            place_nm = row.find('X_SWIFI_MAIN_NM').text
-            place_x = float(row.find('LAT').text)
-            place_y = float(row.find('LNT').text)
-            doc = {
+
+    for row in root.iter("row"):
+        gu_nm = row.find('X_SWIFI_WRDOFC').text
+        place_nm = row.find('X_SWIFI_MAIN_NM').text
+        place_x = float(row.find('LAT').text)
+        place_y = float(row.find('LNT').text)
+        if place_y > 90 or place_y < -90:
+            continue
+        doc = {
+            "_index": "seoul_wifi2",
+            "_source": {
                 "gu_nm": gu_nm,
                 "place_nm": place_nm,
                 "instl_xy": {
@@ -45,8 +46,8 @@ for i in range(1, 21):
                     "lon": place_x
                 }
             }
-            res = es.index(index="seoul_wifi", doc_type="_doc", document=doc)
-        print("END", iStart, "~", iEnd)
-    except RequestError:
-        pass
+        }
+        docs.append(doc)
+    print("END", iStart, "~", iEnd)
+    res = helpers.bulk(es, docs)
 print("END")

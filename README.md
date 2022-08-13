@@ -1,4 +1,4 @@
-# LOGSTASH 기본 사용
+ # LOGSTASH 기본 사용
 .\bin\logstash.bat -e "input P stdin { } } output { stdout { } }"
 
 .\bin\logstash.bat -f .\config\logstash-test.conf
@@ -18,4 +18,4 @@ grok {
 트위터 API V2가 로그스태시에서 지원이 안됨 v1은 신규생성 계정에 대해서 지원이 안됨
 
 
-449p
+481p
